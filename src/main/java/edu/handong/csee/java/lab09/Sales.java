@@ -25,7 +25,7 @@ public class Sales {
 		for(int i=0; i<numTeam; i++) {
 			team[i] = new Sales();
 
-			System.out.println("Enter data for associate number" + (i+1));
+			System.out.println("Enter data for associate number " + (i+1));
 			System.out.println("Enter name of sales associate: ");
 			myKeyboard.nextLine();
 			team[i].name = myKeyboard.nextLine();
@@ -36,6 +36,26 @@ public class Sales {
 		}
 
 
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public double getMoney() {
+		return money;
+	}
+
+
+	public void setMoney(double money) {
+		this.money = money;
 	}
 
 
@@ -53,36 +73,50 @@ public class Sales {
 			sum+=team[i].money;
 		}
 
-		averageSales = sum/3;
+		averageSales = sum/numTeam;
 
 		this.highestSales = highestSales;
 	}
 
 	public void print() {
+		
+		
+		System.out.printf("Average sales per associate is $%.1f \n", this.averageSales);
+		System.out.printf("The highest sales figure is $%.1f \n", this.highestSales);
 
-		System.out.println("Average sales per associate is " + this.averageSales);
-		System.out.println("The highest sales figure is $ " + this.highestSales);
+		System.out.println("The following had the highest sales: ");
+		
+		for(int i=0; i<numTeam; i++) {
+		if(team[i].money == this.highestSales) {
+			System.out.println("Name: " + this.team[i].name);
+			System.out.printf("Sales: %.1f \n", this.team[i].money);
+			
+			if(this.averageSales < this.team[i].money)			
+			System.out.printf("$%.1f above the average. \n", (this.team[i].money - this.averageSales));
+			else
+			System.out.printf("$%.1f below the average. \n", (this.averageSales - this.team[i].money));
+			}		
+		}
 
-		System.out.println("This guy earns this amount  " + team[0].money);
-
+		System.out.println("The rest performed as follows: ");
+		
+		for(int i=0; i<numTeam; i++) {
+			if(team[i].money != this.highestSales) {
+				System.out.println("Name: " + this.team[i].name);
+				System.out.printf("Sales: %.1f \n", this.team[i].money);
+				
+				if(this.averageSales < this.team[i].money)			
+				System.out.printf("$%.1f above the average. \n", (this.team[i].money - this.averageSales));
+				else
+				System.out.printf("$%.1f below the average. \n", (this.averageSales - this.team[i].money));
+				}		
+			}
+	
+	
+	
+	
+	
 	}
-
-	//
-	//	public String getName() {
-	//		return name;
-	//	}
-	//
-	//	public void setName(String name) {
-	//		this.name = name;
-	//	}
-	//
-	//	public int getSales() {
-	//		return sales;
-	//	}
-	//
-	//	public void setSales(int sales) {
-	//		this.sales = sales;
-	//	}
 
 
 	public static void main(String[] args) {
@@ -100,3 +134,4 @@ public class Sales {
 	}
 
 }
+
