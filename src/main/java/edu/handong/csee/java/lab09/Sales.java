@@ -1,19 +1,19 @@
 package edu.handong.csee.java.lab09; // Set the package where this class belongs to
 
 import java.util.Scanner; // gets the Scanner class from the package (libarary) java.util
-import java.util.ArrayList;
+import java.util.ArrayList; // gets the arraylist class from the package *.
 
 /**
  * This class defines to get the sales and names of salesmen. </br>
- * gets total people from the user and get the highest sales person and average sales of salesmen.</br>
+ * use arraylist and get the highest sales person and average sales of salesmen.</br>
  * @author HAN
  */
 public class Sales { // its a class which can access from other package
 
 	private double highestSales; // declares top sales member
 	private double averageSales; // declares aver. member
-	public int size;
-	ArrayList<Salesppl> team = new ArrayList<Salesppl>();
+	public int size; // stores the size because there is no initial max num;
+	ArrayList<Salesppl> team = new ArrayList<Salesppl>(); // instantiate, make a thing team.
 	
 	// private Salesppl[] team;        previous array 
 
@@ -27,35 +27,36 @@ public class Sales { // its a class which can access from other package
 		Scanner myKeyboard = new Scanner(System.in); // sets up things so the program can accept keyboard input
 
 		
-		boolean done = false;
-		int size = 0;
+		boolean done = false; // declares the member boolean done
+		int size = 0; // initialize the member size 0
 		
-		while(!done) {
+		while(!done) { // executes the while loop
 			
 			System.out.println("Enter data for associate number " + (size+1)); // prints which num of men
 			System.out.println("Enter name of sales associate: "); // asks user to put the name of specific man
 
 
-			String name = myKeyboard.nextLine();
-			Salesppl data = new Salesppl();
+			String name = myKeyboard.nextLine(); // getting name member from the user
+			Salesppl data = new Salesppl(); // instantiate data each time the while loop executes
 			
-			data.setName(name);
+			data.setName(name); // using setters to store the value name
 		
 			
 			System.out.println("Enter associate's sales: "); // asks user to put sales value	
-			Double money = myKeyboard.nextDouble();
-			data.setMoney(money);
-			team.add(data);
+			Double money = myKeyboard.nextDouble(); // getting money member from the user
+			data.setMoney(money); // using setters to store the value money
+			team.add(data); // stores values name and money in arraylist
 			
-			size++;
-			this.size = size;
-			System.out.println("More items for the list? ");
+			size++; // increases the size 
+			this.size = size; // stores the size member in class
+			System.out.println("More items for the list? "); // asks user to put more value
 			
-			myKeyboard.nextLine();
-			String ans = myKeyboard.nextLine();
+			myKeyboard.nextLine(); // removing the line space bar
+			String ans = myKeyboard.nextLine(); // stores the value in member ans
+
 			
-			if(!ans.equalsIgnoreCase ("yes"))
-				done = true;
+			if(!ans.equalsIgnoreCase ("yes")) // if the string ans is not equal to yes, the condition is satisfied (the upper case and lower case doesnt matter)
+				done = true; // changes the value boolean member
 		}
 		
 	}
@@ -78,7 +79,7 @@ public class Sales { // its a class which can access from other package
 			sum+=team.get(i).getMoney(); // stack up the money value
 		}
 
-		averageSales = sum/size; // divide by num of sales men to get average
+		this.averageSales = sum/size; // divide by num of sales men to get average
 
 		this.highestSales = highestSales; // stores the value in the class, not in this local method member.
 	}
