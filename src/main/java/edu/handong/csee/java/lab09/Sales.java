@@ -1,6 +1,7 @@
 package edu.handong.csee.java.lab09; // Set the package where this class belongs to
 
 import java.util.Scanner; // gets the Scanner class from the package (libarary) java.util
+import java.util.ArrayList;
 
 /**
  * This class defines to get the sales and names of salesmen. </br>
@@ -9,13 +10,12 @@ import java.util.Scanner; // gets the Scanner class from the package (libarary) 
  */
 public class Sales { // its a class which can access from other package
 
-	private String name; // declares name member
-	private double money; // declares money member
-
 	private double highestSales; // declares top sales member
 	private double averageSales; // declares aver. member
-	private Sales[] team; // declares the array Sales
-	private int numTeam; // declares total num of salesmen member
+	public int size;
+	ArrayList<Salesppl> team = new ArrayList<Salesppl>();
+	
+	// private Salesppl[] team;        previous array 
 
 	/**
 	 * This class defines to get the data sales and names of salesmen. </br>
@@ -25,23 +25,39 @@ public class Sales { // its a class which can access from other package
 	public void getData() { // a method to get the data from the user 
 
 		Scanner myKeyboard = new Scanner(System.in); // sets up things so the program can accept keyboard input
-		System.out.println("Enter number of sales associates: "); // prints to ask the user to get the num of salesmen
-		this.numTeam = myKeyboard.nextInt(); // stores the value in numteam
 
-
-		team = new Sales[numTeam]; // makes the number of user inputs with using array.
-
-		for(int i=0; i<numTeam; i++) { // executes loop recurrence
-			team[i] = new Sales(); // instantiate array team.
-
-			System.out.println("Enter data for associate number " + (i+1)); // prints which num of men
+		
+		boolean done = false;
+		int size = 0;
+		
+		while(!done) {
+			
+			System.out.println("Enter data for associate number " + (size+1)); // prints which num of men
 			System.out.println("Enter name of sales associate: "); // asks user to put the name of specific man
-			myKeyboard.nextLine(); // gets the enter key here, so error doesnt occur
-			team[i].name = myKeyboard.nextLine(); // stores the string value in the array team
 
-			System.out.println("Enter associate's sales: "); // asks user to put sales value
-			team[i].money = myKeyboard.nextDouble(); // stores the value in array team
+
+			String name = myKeyboard.nextLine();
+			Salesppl data = new Salesppl();
+			
+			data.setName(name);
+		
+			
+			System.out.println("Enter associate's sales: "); // asks user to put sales value	
+			Double money = myKeyboard.nextDouble();
+			data.setMoney(money);
+			team.add(data);
+			
+			size++;
+			this.size = size;
+			System.out.println("More items for the list? ");
+			
+			myKeyboard.nextLine();
+			String ans = myKeyboard.nextLine();
+			
+			if(!ans.equalsIgnoreCase ("yes"))
+				done = true;
 		}
+		
 	}
 
 
@@ -53,15 +69,16 @@ public class Sales { // its a class which can access from other package
 		double sum=0; // initialize the sum member
 		double highestSales=0; // initialize the highestsales member
 
-		for(int i=0;i<numTeam;i++) { // executes for loop
+		for(int i=0;i<this.size;i++) { // executes for loop
+			
+			
+			if(highestSales < team.get(i).getMoney()) // condition if the other guy earns more money
+				highestSales = team.get(i).getMoney(); // stores the value in highestsales member
 
-			if(highestSales < team[i].money) // condition if the other guy earns more money
-				highestSales = team[i].money; // stores the value in highestsales member
-
-			sum+=team[i].money; // stack up the money value
+			sum+=team.get(i).getMoney(); // stack up the money value
 		}
 
-		averageSales = sum/numTeam; // divide by num of sales men to get average
+		averageSales = sum/size; // divide by num of sales men to get average
 
 		this.highestSales = highestSales; // stores the value in the class, not in this local method member.
 	}
@@ -78,29 +95,29 @@ public class Sales { // its a class which can access from other package
 
 		System.out.println("The following had the highest sales: "); // prints what next step is coming
 
-		for(int i=0; i<numTeam; i++) { // executes recurrence statement
-			if(team[i].money == this.highestSales) { // condition if the array index has the highest value
-				System.out.println("Name: " + this.team[i].name); // prints the name of array index
-				System.out.printf("Sales: %.1f \n", this.team[i].money); // prints the sales of array index
+		for(int i=0; i<this.size; i++) { // executes recurrence statement
+			if(team.get(i).getMoney() == this.highestSales) { // condition if the array index has the highest value
+				System.out.println("Name: " + team.get(i).getName()); // prints the name of array index
+				System.out.printf("Sales: %.1f \n", team.get(i).getMoney()); // prints the sales of array index
 
-				if(this.averageSales < this.team[i].money)	// condition if the guy earns much money
-					System.out.printf("$%.1f above the average. \n", (this.team[i].money - this.averageSales)); // prints the guy earns much money.
+				if(this.averageSales < team.get(i).getMoney())	// condition if the guy earns much money
+					System.out.printf("$%.1f above the average. \n", (team.get(i).getMoney() - this.averageSales)); // prints the guy earns much money.
 				else // otherwise
-					System.out.printf("$%.1f below the average. \n", (this.averageSales - this.team[i].money)); // prints the guy earns less money
+					System.out.printf("$%.1f below the average. \n", (this.averageSales - team.get(i).getMoney())); // prints the guy earns less money
 			}		
 		}
 
 		System.out.println("The rest performed as follows: "); // prints the other sales men info
 
-		for(int i=0; i<numTeam; i++) { // executes for loop
-			if(team[i].money != this.highestSales) { // condition the guys are not the highestsales 
-				System.out.println("Name: " + this.team[i].name); // prints the index of names
-				System.out.printf("Sales: %.1f \n", this.team[i].money); //prints the index of money
+		for(int i=0; i<this.size; i++) { // executes for loop
+			if(team.get(i).getMoney() != this.highestSales) { // condition the guys are not the highestsales 
+				System.out.println("Name: " + team.get(i).getName()); // prints the index of names
+				System.out.printf("Sales: %.1f \n", team.get(i).getMoney()); //prints the index of money
 
-				if(this.averageSales < this.team[i].money)			// condition they guy earns much money than average
-					System.out.printf("$%.1f above the average. \n", (this.team[i].money - this.averageSales)); // prints the sales the guy earns much money
+				if(this.averageSales < team.get(i).getMoney())			// condition they guy earns much money than average
+					System.out.printf("$%.1f above the average. \n", (team.get(i).getMoney() - this.averageSales)); // prints the sales the guy earns much money
 				else // otherwise
-					System.out.printf("$%.1f below the average. \n", (this.averageSales - this.team[i].money)); // prints the sales the guy earns less money
+					System.out.printf("$%.1f below the average. \n", (this.averageSales - team.get(i).getMoney())); // prints the sales the guy earns less money
 			}		
 		}
 
@@ -121,4 +138,5 @@ public class Sales { // its a class which can access from other package
 	}
 
 }
+
 
